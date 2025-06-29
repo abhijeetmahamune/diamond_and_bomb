@@ -278,7 +278,7 @@
     <audio id="diamond-sound" src="diamond.mp3"></audio>
     <audio id="bomb-sound" src="bomb.mp3"></audio>
     <audio id="cashout-sound" src="cashout.mp3"></audio>
-
+    <audio id="bet-sound" src="bet.mp3"></audio>
     <script>
         let balance;
         let currentBet = 0;
@@ -287,6 +287,7 @@
         const diamondSound = document.getElementById("diamond-sound");
         const bombSound = document.getElementById("bomb-sound");
         const cashoutSound = document.getElementById("cashout-sound");
+        const betSound = document.getElementById("bet-sound");
 
         function playDiamondSound() {
             diamondSound.currentTime = 0;
@@ -301,6 +302,11 @@
         function playCashoutSound() {
             cashoutSound.currentTime = 0;
             cashoutSound.play();
+        }
+
+        function playBetSound(){
+            betSound.currentTime =0;
+            betSound.play();
         }
 
         // const cashout = document.getElementById("cashout");
@@ -418,6 +424,7 @@
 
         // Example game play function
         function playGame() {
+            playBetSound();
             const betAmount = parseInt(bet_value.value); // ✅ moved here
             currentBet = parseInt(bet_value.value);
             cashoutAmount = currentBet;
