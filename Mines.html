@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lets go gambling</title>
+    <style>
+        * {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        a{
+            text-decoration: none;
+            color: #daa520;
+        }
+        body {
+            background-color: #031a0e;
+            /* Dark green-black */
+            color: #f1f1f1;
+        }
+
+        hr {
+            border: none;
+            height: 6px;
+            width: 90%;
+            margin: 20px auto;
+            border-radius: 50px;
+            background: radial-gradient(ellipse at center, gold 0%, gold 40%, transparent 80%);
+        }
+
+        nav {
+            margin: 2% 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: gold;
+        }
+
+        h2 {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        h4 {
+            font-size: 1.2em;
+        }
+
+        .main-div {
+            margin: 30px 100px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .cards-div {
+            display: grid;
+            grid-template-columns: repeat(5, 100px);
+            grid-template-rows: repeat(5, 100px);
+            gap: 10px;
+        }
+
+        .cards {
+            background: linear-gradient(to bottom right, #0a3720, #144d2c);
+            color: white;
+            border: 2px solid #daa520;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(218, 165, 32, 0.5);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .cards:hover {
+            transform: scale(1.05);
+            background-color: #1a623e;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+        }
+
+        .cards:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .form-div {
+            padding: 5%;
+            color: #ffd700;
+            background-color: #072512;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+        }
+
+        .form-div h3 {
+            margin-bottom: 10px;
+        }
+
+        .form-div>form>input[type="number"] {
+            width: 90%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid gold;
+            border-radius: 8px;
+            background-color: #0e2f1c;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .bet-btn {
+            background: linear-gradient(to bottom, #ffe259, #ffa751);
+            color: #1c1c1c;
+            font-weight: 700;
+            font-size: 20px;
+            padding: 14px 40px;
+            border: 3px solid #b8860b;
+            border-radius: 12px;
+            box-shadow:
+                inset 0 2px 2px rgba(255, 255, 255, 0.3),
+                0 6px 15px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            text-shadow: 1px 1px 1px #fff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .bet-btn:hover {
+            background: linear-gradient(to bottom, #fff176, #f39c12);
+            transform: translateY(-2px);
+            box-shadow:
+                inset 0 2px 2px rgba(255, 255, 255, 0.4),
+                0 8px 20px rgba(255, 193, 7, 0.8);
+        }
+
+        .bet-btn:active {
+            transform: translateY(2px);
+            box-shadow:
+                inset 0 2px 5px rgba(0, 0, 0, 0.4),
+                0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .icon {
+            width: 60%;
+            height: auto;
+            pointer-events: none;
+            /* prevents image from interfering with button clicks */
+        }
+
+        h4 {
+            margin: 20px;
+        }
+
+        /* Mobile Devices */
+        @media screen and (max-width: 768px) {
+            .main-div {
+                margin: 20px;
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .cards-div {
+                grid-template-columns: repeat(5, 60px);
+                grid-template-rows: repeat(5, 60px);
+                gap: 6px;
+                justify-content: center;
+            }
+
+            .cards {
+                font-size: 12px;
+                padding: 0;
+            }
+
+            .form-div {
+                padding: 20px;
+            }
+
+            .bet-btn {
+                width: 100%;
+                font-size: 16px;
+                padding: 10px;
+                margin: 6px 0;
+            }
+
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            h4 {
+                font-size: 1em;
+            }
+
+            .icon {
+                width: 70%;
+            }
+        }
+
+        /* Extra Small Devices (Phones under 400px width) */
+        @media screen and (max-width: 400px) {
+            .cards-div {
+                grid-template-columns: repeat(5, 50px);
+                grid-template-rows: repeat(5, 50px);
+            }
+
+            .cards {
+                font-size: 10px;
+            }
+
+            .icon {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div>
+        <nav>
+            <h2>Mines & Bombs</h2>
+            <h4>Balance: ₹<span id="balance-display">1000</span></h4>
+        </nav>
+        <hr>
+    </div>
+    <div class="main-div">
+        <div class="form-div">
+            <form action="">
+                <h3>Enter bet amount: </h3>
+                <input type="number" name="bet" value="100" id="bet-value" placeholder="Enter amount">
+                <h3>Number of Mines: </h3>
+                <input type="number" name="mines-number" value="1" id="mines-number"> <br>
+                <input type="button" class="bet-btn" value="BET" onclick="playGame()">
+                <input type="button" class="bet-btn" value="Cash Out" onclick="cashout()">
+
+
+                <h4 id="cashout">Cashout: ₹0</h4>
+            </form>
+        </div>
+        <div class="cards-div">
+            <button class="cards" id="b1"></button>
+            <button class="cards" id="b2"></button>
+            <button class="cards" id="b3"></button>
+            <button class="cards" id="b4"></button>
+            <button class="cards" id="b5"></button>
+            <button class="cards" id="b6"></button>
+            <button class="cards" id="b7"></button>
+            <button class="cards" id="b8"></button>
+            <button class="cards" id="b9"></button>
+            <button class="cards" id="b10"></button>
+            <button class="cards" id="b11"></button>
+            <button class="cards" id="b12"></button>
+            <button class="cards" id="b13"></button>
+            <button class="cards" id="b14"></button>
+            <button class="cards" id="b15"></button>
+            <button class="cards" id="b16"></button>
+            <button class="cards" id="b17"></button>
+            <button class="cards" id="b18"></button>
+            <button class="cards" id="b19"></button>
+            <button class="cards" id="b20"></button>
+            <button class="cards" id="b21"></button>
+            <button class="cards" id="b22"></button>
+            <button class="cards" id="b23"></button>
+            <button class="cards" id="b24"></button>
+            <button class="cards" id="b25"></button>
+        </div>
+    </div>
+    <center>
+        <a href="https://abhijeet-mahamune.netlify.app/">Who created this?</a>
+    </center>
+    <audio id="diamond-sound" src="diamond.mp3"></audio>
+    <audio id="bomb-sound" src="bomb.mp3"></audio>
+    <audio id="cashout-sound" src="cashout.mp3"></audio>
+
+    <script>
+        let balance;
+        let currentBet = 0;
+        let cashoutAmount = 0;
+        let gameStarted = false; // Tracks if a game is active
+        const diamondSound = document.getElementById("diamond-sound");
+        const bombSound = document.getElementById("bomb-sound");
+        const cashoutSound = document.getElementById("cashout-sound");
+
+        function playDiamondSound() {
+            diamondSound.currentTime = 0;
+            diamondSound.play();
+        }
+
+        function playBombSound() {
+            bombSound.currentTime = 0;
+            bombSound.play();
+        }
+
+        function playCashoutSound() {
+            cashoutSound.currentTime = 0;
+            cashoutSound.play();
+        }
+
+        // const cashout = document.getElementById("cashout");
+        const buttons = [];
+        for (let i = 1; i <= 25; i++) {
+            buttons.push(document.getElementById("b" + i));
+        }
+        const bet_value = document.getElementById("bet-value");
+        const mines_number = document.getElementById("mines-number");
+        const balanceDisplay = document.getElementById("balance-display");
+
+        // Initialize balance from localStorage or set default
+        if (localStorage.getItem("balance") === null) {
+            balance = 1000; // default starting value
+            localStorage.setItem("balance", balance);
+        } else {
+            balance = parseInt(localStorage.getItem("balance"));
+        }
+
+
+        function updateBalanceDisplay() {
+            balanceDisplay.textContent = balance.toFixed(2);
+            localStorage.setItem("balance", balance);
+            console.log(balance)
+        }
+
+        function getRandomInt() {
+            const min = 1;
+            const max = 25;
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function addPoints(amount) {
+            balance += amount;
+            updateBalanceDisplay();
+        }
+
+        function deductPoints(amount) {
+            if (balance >= amount) {
+                balance -= amount;
+                updateBalanceDisplay();
+            } else {
+                alert("Insufficient balance!");
+            }
+        }
+
+        buttons.forEach((btn) => {
+            btn.addEventListener("click", function () {
+                if (!gameStarted) {
+                    alert("⚠️ Please click BET to start a new game!");
+                    return;
+                }
+
+                if (btn.disabled) {
+                    return; // Prevent double clicks
+                }
+
+                if (btn.isBomb) {
+                    playBombSound();
+                    btn.innerHTML = '<img src="https://img.icons8.com/emoji/48/bomb-emoji.png" alt="Bomb" class="icon">';
+                    cashoutAmount = 0;
+                    document.getElementById("cashout").innerText = "Cashout: ₹0";
+
+                    // Disable all buttons
+                    buttons.forEach(b => b.disabled = true);
+
+                    gameStarted = false; // ✅ Mark game ended
+                    return;
+                } else {
+                    playDiamondSound();
+                    btn.innerHTML = '<img src="https://img.icons8.com/pulsar-line/48/40C057/emerald.png" alt="Diamond" class="icon">';
+                    cashoutAmount *= 2;
+                    document.getElementById("cashout").innerText = "Cashout: ₹" + cashoutAmount;
+                }
+
+                btn.disabled = true;
+            });
+        });
+
+
+        function cashout() {
+            if (!gameStarted) {
+                alert("Start a game first!");
+                return;
+            }
+
+            let cashoutText = document.getElementById("cashout").innerText;
+            let balanceElement = document.getElementById("balance-display");
+
+            let winning_amount = parseInt(cashoutText.replace(/[^\d]/g, ''));
+            let currentBalance = parseInt(balanceElement.innerText);
+
+            if (winning_amount > 0) {
+                balance += winning_amount;
+                updateBalanceDisplay();
+                playCashoutSound();
+            } else {
+                alert("You can't cash out ₹0!");
+                return;
+            }
+
+            // Reset game
+            for (let btn of buttons) {
+                btn.innerHTML = "";
+                btn.isBomb = false;
+                btn.disabled = false;
+                btn.style.backgroundColor = "black";
+            }
+
+            document.getElementById("cashout").innerText = "Cashout: ₹0";
+            cashoutAmount = 0;
+            gameStarted = false; // Mark game as ended
+        }
+
+
+        // Example game play function
+        function playGame() {
+            const betAmount = parseInt(bet_value.value); // ✅ moved here
+            currentBet = parseInt(bet_value.value);
+            cashoutAmount = currentBet;
+            document.getElementById("cashout").innerText = "Cashout: ₹" + cashoutAmount;
+
+
+            let numMines = parseInt(mines_number.value);
+            if (gameStarted) {
+                alert("your ending this game")
+                cashout();
+                return;
+            }
+            gameStarted = true; // ✅ Game has started
+            // Clear all buttons first
+            for (let btn of buttons) {
+                btn.innerHTML = "";         // Remove BOMB or Diamond text
+                btn.isBomb = false;         // Reset bomb flag
+                btn.disabled = false;       // Enable button if disabled
+                btn.style.backgroundColor = "black"; // Reset color to default (remove grey)
+            }
+
+            if (balance < betAmount) {
+                alert("Insufficient balance!");
+                return;
+            }
+
+            if (numMines <= 0 || numMines > 10) {
+                alert("Please enter a number of mines between 1 and 10");
+                return;
+            }
+
+            // Clear all buttons first
+            for (let btn of buttons) {
+                btn.innerHTML = ""; // clear old values
+            }
+
+            // Generate unique bomb positions
+            let bombPositions = new Set();
+            while (bombPositions.size < numMines) {
+                bombPositions.add(getRandomInt());
+            }
+
+            for (let pos of bombPositions) {
+                buttons[pos - 1].isBomb = true; // -1 for 0-based index
+            }
+
+            // Set Diamond on others
+            for (let i = 0; i < buttons.length; i++) {
+                if (!bombPositions.has(i + 1)) {
+                    buttons[i].isBomb = false;
+                }
+            }
+            // Deduct balance
+            deductPoints(betAmount);
+        }
+
+        // Call once to display on page load
+        updateBalanceDisplay();
+
+
+    </script>
+</body>
+
+</html>
